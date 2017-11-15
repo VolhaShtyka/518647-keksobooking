@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ольга Штыка](https://up.htmlacademy.ru/javascript/11/user/518647).
-* Наставник: `Неизвестно`.
+* Наставник: `Игорь Тараканов`.
 
 ---
 
