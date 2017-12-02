@@ -2,12 +2,10 @@
 
 (function () {
   var formSubmitElement = document.querySelector('.form__submit');
-
-  var formSubmitHandler = function (evt) {
+  var formSubmitHandler = function () {
     var addressElement = document.querySelector('#address');
     if (addressElement.value === '') {
-      evt.preventDefault();
-      formSubmitElement.disabled = true;
+      addressElement.readOnly = false;
     }
   };
 
@@ -31,14 +29,15 @@
 (function () {
   var houseTypeElement = document.querySelector('#type');
   var price = document.querySelector('#price');
+  price.defaultValue = 1000;
   var typeElementSelectHandler = function (evt) {
     var currentValue = evt.target.value;
     if (currentValue === 'flat') {
-      price.minLength = 1000;
+      price.min = 1000;
     } else if (currentValue === 'house') {
-      price.minLength = 5000;
+      price.min = 5000;
     } else if (currentValue === 'palace') {
-      price.minLength = 10000;
+      price.min = 10000;
     }
   };
 
