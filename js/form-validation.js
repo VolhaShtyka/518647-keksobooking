@@ -1,18 +1,6 @@
 'use strict';
 
 (function () {
-  var formSubmitElement = document.querySelector('.form__submit');
-  var formSubmitHandler = function () {
-    var addressElement = document.querySelector('#address');
-    if (addressElement.value === '') {
-      addressElement.readOnly = false;
-    }
-  };
-
-  formSubmitElement.addEventListener('click', formSubmitHandler);
-})();
-
-(function () {
   var arrivalTimeElement = document.querySelector('#timein');
   var departureTimeElement = document.querySelector('#timeout');
 

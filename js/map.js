@@ -72,7 +72,7 @@ var getRandomArray = function (arr) {
 var mapElement = document.querySelector('.map');
 var noticeFormElement = document.querySelector('.notice__form');
 var fieldsetsFormElements = noticeFormElement.querySelectorAll('fieldset');
-var hotelsPinsElement = mapElement.querySelector('.map__pins');
+var hotelsPinsContainerElement = mapElement.querySelector('.map__pins');
 var mapPinMainElement = document.querySelector('.map__pin--main');
 
 var setElementsFormDisabled = function (isDisable) {
@@ -117,10 +117,13 @@ var findHotelFromPinElement = function (authorAvatarSrc) {
 var pinMainMouseupHandler = function () {
   mapElement.classList.remove('map--faded');
 
-  renderElements(hotelsPinsElements(), hotelsPinsElement);
+  renderElements(hotelsPinsElements(), hotelsPinsContainerElement);
 
   noticeFormElement.classList.remove('notice__form--disabled');
   setElementsFormDisabled(false);
+
+  var addressElement = document.querySelector('#address');
+  addressElement.value = mapPinMainElement.offsetLeft + ' ' + mapPinMainElement.offsetTop;
 };
 
 var mapElementTemplate = document.querySelector('template').content.querySelector('article.map__card');
@@ -151,7 +154,7 @@ var createHotelElement = function (hotel) {
 };
 
 var removeActiveBehaivorFromAllPins = function () {
-  var hotelsPinsActiveElements = hotelsPinsElement.querySelectorAll('.map__pin--active');
+  var hotelsPinsActiveElements = hotelsPinsContainerElement.querySelectorAll('.map__pin--active');
   for (var i = 0; i < hotelsPinsActiveElements.length; i++) {
     hotelsPinsActiveElements[i].classList.remove('map__pin--active');
   }
@@ -198,5 +201,5 @@ var dialogEnterPressHandler = function (evt) {
 };
 
 mapPinMainElement.addEventListener('mouseup', pinMainMouseupHandler);
-hotelsPinsElement.addEventListener('click', openPopupHotelDialog);
-hotelsPinsElement.addEventListener('keydown', dialogEnterPressHandler);
+hotelsPinsContainerElement.addEventListener('click', openPopupHotelDialog);
+hotelsPinsContainerElement.addEventListener('keydown', dialogEnterPressHandler);
