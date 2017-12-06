@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  window.map.setElementsFormDisabled(true);
+
   var arrivalTimeElement = document.querySelector('#timein');
   var departureTimeElement = document.querySelector('#timeout');
 
@@ -12,9 +14,8 @@
 
   arrivalTimeElement.addEventListener('click', timeElementSelectHandler);
   departureTimeElement.addEventListener('click', timeElementSelectHandler);
-})();
 
-(function () {
+
   var houseTypeElement = document.querySelector('#type');
   var price = document.querySelector('#price');
   price.defaultValue = 1000;
@@ -30,9 +31,8 @@
   };
 
   houseTypeElement.addEventListener('click', typeElementSelectHandler);
-})();
 
-(function () {
+
   var roomNumberElement = document.querySelector('#room_number');
   var capacityGuestsElement = document.querySelectorAll('#capacity option');
 
@@ -54,4 +54,5 @@
   };
 
   roomNumberElement.addEventListener('click', capacitySelectHandler);
+
 })();
