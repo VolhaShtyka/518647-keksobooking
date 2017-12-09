@@ -1,15 +1,19 @@
 'use strict';
 
 (function () {
+  var MIN_PRICES = [1000, 5000, 10000];
+
   window.map.setElementsFormDisabled(true);
 
   var arrivalTimeElement = document.querySelector('#timein');
   var departureTimeElement = document.querySelector('#timeout');
 
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+
   var timeElementSelectHandler = function (evt) {
-    var currentValue = evt.target.value;
-    arrivalTimeElement.value = currentValue;
-    departureTimeElement.value = currentValue;
+    window.synchronizeFields(evt.target, departureTimeElement, window.data.HOTEL_CHECK_TIMES, window.data.HOTEL_CHECK_TIMES, syncValues);
   };
 
   arrivalTimeElement.addEventListener('click', timeElementSelectHandler);
@@ -19,15 +23,13 @@
   var houseTypeElement = document.querySelector('#type');
   var price = document.querySelector('#price');
   price.defaultValue = 1000;
+
+  var syncValueWithMin = function (element, value) {
+    element.min = value;
+  };
+
   var typeElementSelectHandler = function (evt) {
-    var currentValue = evt.target.value;
-    if (currentValue === 'flat') {
-      price.min = 1000;
-    } else if (currentValue === 'house') {
-      price.min = 5000;
-    } else if (currentValue === 'palace') {
-      price.min = 10000;
-    }
+    window.synchronizeFields(evt.target, price, window.data.HOTEL_TYPES, MIN_PRICES, syncValueWithMin);
   };
 
   houseTypeElement.addEventListener('click', typeElementSelectHandler);
