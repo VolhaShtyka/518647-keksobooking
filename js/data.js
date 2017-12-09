@@ -11,6 +11,9 @@
   var HOTEL_CHECK_TIMES = ['12:00', '13:00', '14:00'];
 
   window.data = {
+    HOTEL_TYPES: HOTEL_TYPES,
+    HOTEL_CHECK_TIMES: HOTEL_CHECK_TIMES,
+
     hotels: function () {
       var similarHotels = [];
       for (var i = 0; i < HOTELS_COUNT; i++) {
