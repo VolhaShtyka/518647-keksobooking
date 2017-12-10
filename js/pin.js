@@ -13,14 +13,6 @@
     return hotelPinElement;
   };
 
-  var hotelsPinsElements = function () {
-    hotelsPinsElements = [];
-    for (var i = 0; i < window.data.hotels().length; i++) {
-      hotelsPinsElements[i] = createHotelPinElement(window.data.hotels()[i]);
-    }
-    return hotelsPinsElements;
-  };
-
   var dialogEnterPressHandler = function (evt) {
     window.util.isEnterPressed(evt, window.openPopupHotelDialog);
   };

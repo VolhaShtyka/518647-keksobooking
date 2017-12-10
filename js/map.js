@@ -5,24 +5,8 @@
   var MAX_HEIGHT_PIN_ON_MAP = 130;
   var MIN_HEIGHT_PIN_ON_MAP = 660;
 
-  var noticeFormElement = document.querySelector('.notice__form');
-
-  var setElementsFormDisabled = function (isDisable) {
-    var fieldsetsFormElements = noticeFormElement.querySelectorAll('fieldset');
-    if (!isDisable) {
-      noticeFormElement.classList.remove('notice__form--disabled');
-    }
-    for (var i = 0; i < fieldsetsFormElements.length; i++) {
-      fieldsetsFormElements[i].disabled = isDisable;
-    }
-  };
-
-  setElementsFormDisabled(true);
-
   var mapElement = document.querySelector('.map');
-
   var mapPinMainElement = mapElement.querySelector('.map__pin--main');
-
   var addressElement = document.querySelector('#address');
 
   var startCoords = {
@@ -67,8 +51,8 @@
 
   var hotelsPinsElements = function () {
     hotelsPinsElements = [];
-    for (var i = 0; i < window.data.hotels().length; i++) {
-      hotelsPinsElements[i] = window.pin.createHotelPinElement(window.data.hotels()[i]);
+    for (var i = 0; i < window.data.hotels.length; i++) {
+      hotelsPinsElements[i] = window.pin.createHotelPinElement(window.data.hotels[i]);
     }
     return hotelsPinsElements;
   };
@@ -78,7 +62,7 @@
   var setMapActiveOnFirstClick = function (isFirstClick) {
     if (isFirstClick) {
       window.util.renderElements(hotelsPinsElements(), window.pin.hotelsPinsContainerElement);
-      setElementsFormDisabled(false);
+      window.form.setElementsFormDisabled(false);
     }
   };
 
@@ -94,12 +78,6 @@
   mapPinMainElement.addEventListener('mousedown', pinMainElementMouseDownHandler);
 
   window.map = {
-    mapElement: document.querySelector('.map'),
-
-    noticeFormElement: noticeFormElement,
-
-    setElementsFormDisabled: function (isDisable) {
-      setElementsFormDisabled(isDisable);
-    }
+    mapElement: document.querySelector('.map')
   };
 })();

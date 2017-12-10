@@ -1,19 +1,32 @@
 'use strict';
 
 (function () {
-  var MIN_PRICES = [1000, 5000, 10000];
-
-  window.map.setElementsFormDisabled(true);
+  var MIN_PRICES = [1000, 0, 5000, 10000];
+  var HOTEL_TYPES = ['flat', 'bungalo', 'house', 'palace'];
+  var HOTEL_CHECK_TIMES = ['12:00', '13:00', '14:00'];
 
   var arrivalTimeElement = document.querySelector('#timein');
   var departureTimeElement = document.querySelector('#timeout');
+  var noticeFormElement = document.querySelector('.notice__form');
+
+  var setElementsFormDisabled = function (isDisable) {
+    var fieldsetsFormElements = noticeFormElement.querySelectorAll('fieldset');
+    if (!isDisable) {
+      noticeFormElement.classList.remove('notice__form--disabled');
+    }
+    for (var i = 0; i < fieldsetsFormElements.length; i++) {
+      fieldsetsFormElements[i].disabled = isDisable;
+    }
+  };
+
+  setElementsFormDisabled(true);
 
   var syncValues = function (element, value) {
     element.value = value;
   };
 
   var timeElementSelectHandler = function (evt) {
-    window.synchronizeFields(evt.target, departureTimeElement, window.data.HOTEL_CHECK_TIMES, window.data.HOTEL_CHECK_TIMES, syncValues);
+    window.synchronizeFields(evt.target, departureTimeElement, HOTEL_CHECK_TIMES, HOTEL_CHECK_TIMES, syncValues);
   };
 
   arrivalTimeElement.addEventListener('click', timeElementSelectHandler);
@@ -22,14 +35,20 @@
 
   var houseTypeElement = document.querySelector('#type');
   var price = document.querySelector('#price');
-  price.defaultValue = 1000;
+
+  var setFormValuesDefult = function () {
+    noticeFormElement.reset();
+    price.defaultValue = 1000;
+  };
+
+  setFormValuesDefult();
 
   var syncValueWithMin = function (element, value) {
     element.min = value;
   };
 
   var typeElementSelectHandler = function (evt) {
-    window.synchronizeFields(evt.target, price, window.data.HOTEL_TYPES, MIN_PRICES, syncValueWithMin);
+    window.synchronizeFields(evt.target, price, HOTEL_TYPES, MIN_PRICES, syncValueWithMin);
   };
 
   houseTypeElement.addEventListener('click', typeElementSelectHandler);
@@ -55,6 +74,21 @@
     }
   };
 
-  roomNumberElement.addEventListener('click', capacitySelectHandler);
+  var loadHandler = function () {
+    setFormValuesDefult();
+  };
 
+  var formSubmitHandler = function (evt) {
+    window.backend.save(new FormData(noticeFormElement), loadHandler, window.data.errorHandler);
+    evt.preventDefault();
+  };
+
+  roomNumberElement.addEventListener('click', capacitySelectHandler);
+  noticeFormElement.addEventListener('submit', formSubmitHandler);
+
+  window.form = {
+    setElementsFormDisabled: function (isDisable) {
+      setElementsFormDisabled(isDisable);
+    }
+  };
 })();
