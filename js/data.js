@@ -2,12 +2,12 @@
 
 (function () {
 
-  var HOTELS_COUNT = 8;
+//  var HOTELS_COUNT = 8;
 
   var loadHandler = function (hotels) {
-    for (var i = 0; i < HOTELS_COUNT; i++) {
-      window.data.hotels[i] = hotels[i];
-    }
+  //  for (var i = 0; i < HOTELS_COUNT; i++) {
+    window.data.hotels = hotels;
+  //  }
   };
 
   var errorHandler = function (message) {

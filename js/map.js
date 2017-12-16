@@ -4,6 +4,7 @@
 
   var MAX_HEIGHT_PIN_ON_MAP = 130;
   var MIN_HEIGHT_PIN_ON_MAP = 660;
+  var HOTELS_PINS_COUNT = 5;
 
   var mapElement = document.querySelector('.map');
   var mapPinMainElement = mapElement.querySelector('.map__pin--main');
@@ -49,26 +50,37 @@
     setAddressCoordinatesValue(x, y);
   };
 
-  var hotelsPinsElements = function () {
-    hotelsPinsElements = [];
-    for (var i = 0; i < window.data.hotels.length; i++) {
-      hotelsPinsElements[i] = window.pin.createHotelPinElement(window.data.hotels[i]);
-    }
+  var removePinsElements = function () {
+    var allHotelsPins = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    Array.prototype.forEach.call(allHotelsPins, function (node) {
+      node.parentNode.removeChild(node);
+    });
+  };
+
+  var createHotelsPinsElements = function (hotels) {
+    var hotelsPinsElements = [];
+    hotels.slice(0, HOTELS_PINS_COUNT).forEach(function (item) {
+      hotelsPinsElements.push(window.pin.createHotelPinElement(item));
+    });
     return hotelsPinsElements;
   };
 
   var isFirstClickBoolean = true;
 
+  var renderHotelsPins = function (hotels) {
+    removePinsElements();
+    window.util.renderElements(createHotelsPinsElements(hotels), window.pin.hotelsPinsContainerElement);
+  };
+
   var setMapActiveOnFirstClick = function (isFirstClick) {
     if (isFirstClick) {
-      window.util.renderElements(hotelsPinsElements(), window.pin.hotelsPinsContainerElement);
+      renderHotelsPins(window.data.hotels);
       window.form.setElementsFormDisabled(false);
     }
   };
 
   var pinMainElementMouseUpHandler = function (evt) {
     evt.preventDefault();
-
     setMapActiveOnFirstClick(isFirstClickBoolean);
     isFirstClickBoolean = false;
     document.removeEventListener('mousemove', pinMainElementMouseMoveHandler);
@@ -78,6 +90,9 @@
   mapPinMainElement.addEventListener('mousedown', pinMainElementMouseDownHandler);
 
   window.map = {
-    mapElement: document.querySelector('.map')
+    mapElement: document.querySelector('.map'),
+    renderHotelsPins: function (hotels) {
+      renderHotelsPins(hotels);
+    }
   };
 })();
