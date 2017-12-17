@@ -1,12 +1,9 @@
 'use strict';
 
 (function () {
-  window.synchronizeFields = function (elementOne, elementTwo, elementOneValues, elementTwoValues, synchronizeAction) {
-    for (var i = 0; i < elementOneValues.length; i++) {
-      if (elementOneValues[i] === elementOne.value) {
-        synchronizeAction(elementTwo, elementTwoValues[i]);
-      }
-    }
+  window.synchronizeFields = function (currentElement, elementToSynchronize, currentElementValues, synchronizeElementValues, synchronizeAction) {
+    var synchronizeIndex = currentElementValues.indexOf(currentElement.value);
+    synchronizeAction(elementToSynchronize, synchronizeElementValues[synchronizeIndex]);
   };
 })();
 

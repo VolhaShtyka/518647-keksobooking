@@ -9,18 +9,6 @@
   var departureTimeElement = document.querySelector('#timeout');
   var noticeFormElement = document.querySelector('.notice__form');
 
-  var setElementsFormDisabled = function (isDisable) {
-    var fieldsetsFormElements = noticeFormElement.querySelectorAll('fieldset');
-    if (!isDisable) {
-      noticeFormElement.classList.remove('notice__form--disabled');
-    }
-    for (var i = 0; i < fieldsetsFormElements.length; i++) {
-      fieldsetsFormElements[i].disabled = isDisable;
-    }
-  };
-
-  setElementsFormDisabled(true);
-
   var syncValues = function (element, value) {
     element.value = value;
   };
@@ -79,16 +67,20 @@
   };
 
   var formSubmitHandler = function (evt) {
-    window.backend.save(new FormData(noticeFormElement), loadHandler, window.data.errorHandler);
+    window.backend.save(new FormData(noticeFormElement), loadHandler);
     evt.preventDefault();
   };
 
   roomNumberElement.addEventListener('click', capacitySelectHandler);
   noticeFormElement.addEventListener('submit', formSubmitHandler);
 
-  window.form = {
-    setElementsFormDisabled: function (isDisable) {
-      setElementsFormDisabled(isDisable);
+  window.setFormDisabled = function (isDisable) {
+    var fieldsetsElements = noticeFormElement.querySelectorAll('fieldset');
+    if (!isDisable) {
+      noticeFormElement.classList.remove('notice__form--disabled');
+    }
+    for (var i = 0; i < fieldsetsElements.length; i++) {
+      fieldsetsElements[i].disabled = isDisable;
     }
   };
 })();

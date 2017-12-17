@@ -2,50 +2,45 @@
 
 (function () {
 
-  var mapPinMainElement = document.querySelector('.map__pin--main');
+  var pinMainElement = document.querySelector('.map__pin--main');
 
-  var removeActiveBehaivorFromAllPins = function () {
-    var hotelsPinsActiveElements = document.querySelectorAll('.map__pin--active');
-    for (var i = 0; i < hotelsPinsActiveElements.length; i++) {
-      hotelsPinsActiveElements[i].classList.remove('map__pin--active');
-    }
+  var removeActiveBehaivor = function () {
+    Array.from(document.querySelectorAll('.map__pin--active')).forEach(function (element) {
+      element.classList.remove('map__pin--active');
+    });
   };
 
-  var removeActivePopupElement = function () {
-    var popupHotelElement = document.querySelector('.map__card.popup');
-    if (popupHotelElement !== null) {
-      popupHotelElement.remove();
-      removeActiveBehaivorFromAllPins();
-      document.removeEventListener('keydown', dialogCloseEnterPressHandler);
+  var hideCard = function () {
+    var popupElement = document.querySelector('.map__card.popup');
+    if (popupElement !== null) {
+      popupElement.remove();
+      removeActiveBehaivor();
+      document.removeEventListener('keydown', closeButtonEnterPressHandler);
       document.removeEventListener('click', dialogEscPressHandler);
     }
   };
 
-  var dialogCloseEnterPressHandler = function (evt) {
-    window.util.isEnterPressed(evt, removeActivePopupElement);
+  var closeButtonEnterPressHandler = function (evt) {
+    window.keyboard.isEnterPressed(evt, hideCard);
   };
 
   var dialogEscPressHandler = function (evt) {
-    window.util.isEscapePressed(evt, removeActivePopupElement);
+    window.keyboard.isEscPressed(evt, hideCard);
   };
 
-  window.openPopupHotelDialog = function (evt) {
-    var pin;
-    if (evt.target.tagName === 'IMG') {
-      pin = evt.target.parentElement;
-    } else {
-      pin = evt.target;
-    }
+  var closeButtonClickHandler = function () {
+    hideCard();
+  };
 
-    if (pin !== null && pin !== mapPinMainElement && pin.classList.contains('map__pin')) {
-      removeActivePopupElement();
-      window.showCard(pin);
-
-      var popupCloseElement = document.querySelector('.popup__close');
-      popupCloseElement.addEventListener('click', removeActivePopupElement);
-      popupCloseElement.addEventListener('keydown', dialogCloseEnterPressHandler);
+  window.openPopup = function (evt) {
+    var pinElement = evt.target.tagName === 'IMG' ? evt.target.parentElement : evt.target;
+    if (pinElement !== null && pinElement !== pinMainElement && pinElement.classList.contains('map__pin')) {
+      hideCard();
+      window.showCard(pinElement);
+      var closeButtonElement = document.querySelector('.popup__close');
+      closeButtonElement.addEventListener('keydown', closeButtonEnterPressHandler);
+      closeButtonElement.addEventListener('click', closeButtonClickHandler);
       document.addEventListener('keydown', dialogEscPressHandler);
     }
   };
-
 })();
