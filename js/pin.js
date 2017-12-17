@@ -2,36 +2,28 @@
 
 (function () {
 
+  var pinElementTemplate = document.querySelector('template').content.querySelector('button.map__pin');
+  var containerElement = document.querySelector('.map__pins');
 
-  var hotelPinElementTemplate = document.querySelector('template').content.querySelector('button.map__pin');
-
-  var createHotelPinElement = function (hotel) {
-    var hotelPinElement = hotelPinElementTemplate.cloneNode(true);
-    hotelPinElement.style.left = hotel.location.x + 'px';
-    hotelPinElement.style.top = hotel.location.y + 'px';
-    hotelPinElement.querySelector('img').src = hotel.author.avatar;
-    return hotelPinElement;
+  var pinEnterPressHandler = function (evt) {
+    window.keyboard.isEnterPressed(evt, window.openPopup);
   };
 
-  var dialogEnterPressHandler = function (evt) {
-    window.util.isEnterPressed(evt, window.openPopupHotelDialog);
+  var pinClickHandler = function (evt) {
+    window.openPopup(evt);
   };
 
-  var dialogClickHandler = function (evt) {
-    window.openPopupHotelDialog(evt);
-  };
-
-  var hotelsPinsContainerElement = document.querySelector('.map__pins');
-
-  hotelsPinsContainerElement.addEventListener('click', dialogClickHandler);
-  hotelsPinsContainerElement.addEventListener('keydown', dialogEnterPressHandler);
+  containerElement.addEventListener('click', pinClickHandler);
+  containerElement.addEventListener('keydown', pinEnterPressHandler);
 
   window.pin = {
-    hotelsPinsContainerElement: hotelsPinsContainerElement,
-
-    createHotelPinElement: function (hotel) {
-      return createHotelPinElement(hotel);
+    containerElement: containerElement,
+    createElement: function (hotel) {
+      var pinElement = pinElementTemplate.cloneNode(true);
+      pinElement.style.left = hotel.location.x + 'px';
+      pinElement.style.top = hotel.location.y + 'px';
+      pinElement.querySelector('img').src = hotel.author.avatar;
+      return pinElement;
     }
   };
-
 })();

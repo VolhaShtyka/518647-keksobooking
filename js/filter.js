@@ -71,7 +71,7 @@
     } else {
       setCurrentFilter(evt.target);
     }
-    window.debounce(window.map.renderHotelsPins(applyFilter()));
+    window.debounce(window.map.renderPins(applyFilter()));
   };
 
   mapFiltersElement.addEventListener('change', filterChangeHandler);
