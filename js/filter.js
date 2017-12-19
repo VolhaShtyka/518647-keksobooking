@@ -9,9 +9,8 @@
       return 'low';
     } else if (price > 50000) {
       return 'high';
-    } else {
-      return 'middle';
     }
+    return 'middle';
   };
 
   var checkFeatures = function (hotel) {

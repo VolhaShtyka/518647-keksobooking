@@ -14,11 +14,12 @@
   };
 
   var timeElementSelectHandler = function (evt) {
-    window.synchronizeFields(evt.target, departureTimeElement, HOTEL_CHECK_TIMES, HOTEL_CHECK_TIMES, syncValues);
+    var syncField = evt.target === departureTimeElement ? arrivalTimeElement : departureTimeElement;
+    window.synchronizeFields(evt.target, syncField, HOTEL_CHECK_TIMES, HOTEL_CHECK_TIMES, syncValues);
   };
 
-  arrivalTimeElement.addEventListener('click', timeElementSelectHandler);
-  departureTimeElement.addEventListener('click', timeElementSelectHandler);
+  arrivalTimeElement.addEventListener('change', timeElementSelectHandler);
+  departureTimeElement.addEventListener('change', timeElementSelectHandler);
 
 
   var houseTypeElement = document.querySelector('#type');
@@ -33,6 +34,7 @@
 
   var syncValueWithMin = function (element, value) {
     element.min = value;
+    element.value = value;
   };
 
   var typeElementSelectHandler = function (evt) {
